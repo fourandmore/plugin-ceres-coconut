@@ -1,1 +1,225 @@
-<!-- Insert markup for item category template here -->
+{% extends getPartial('page-design') %}
+{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
+{% import "Ceres::Category.Macros.CategoryTree" as Tree %}
+
+{% set overrideSearchFilters = LayoutContainer.show("Ceres::Search.Filter", facets ) %}
+
+{% block PageBody %}
+
+    {{ component( "Ceres::ItemList.Components.CategoryItem") }}
+    {{ component( "Ceres::ItemList.Components.Filter.ItemFilterList") }}
+    {{ component( "Ceres::ItemList.Components.Filter.ItemFilterTagList") }}
+
+    {% if category is defined and ceresConfig.item.showCategoryImage %}
+        {% include "Ceres::Category.Item.Partials.CategoryParallaxImage" with { 'category': category } %}
+    {% endif %}
+
+    <div class="categoriegrid page-content container-max">
+
+        {% if category is not defined and itemList is not empty %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h1 class="h2" id="searchPageTitle">{{ trans("Ceres::Template.itemSearchResults") }} {{ searchString }}</h1>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if category is defined and not ceresConfig.item.showCategoryImage %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h1 class="h2 category-title">{{ category.details[0].name }}</h1>
+                    {% if ceresConfig.item.showCategoryDescriptionTop in ["description1", "both"] and category.details[0].description | trim is not empty %}
+                        <div class="category-description mb-3">{{ category.details[0].description | raw }}</div>
+                    {% endif %}
+                    {% if ceresConfig.item.showCategoryDescriptionTop in ["description2", "both"] and category.details[0].description2 | trim is not empty %}
+                        <div class="category-description mb-3">{{ category.details[0].description2 | raw }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+		
+		
+		 <!-- Kategoriebilder -->
+	{# Alle Unterkategorien dieser Kategorie auslesen #}
+    {% set subCategories = services.category.getChildren(category.id) %}
+	
+	{# Nur aktive Unterkategorien berücksichtigen und in benötigte Arrays für die Sortierung nach Position einfügen #}
+	{% set idPositions = {} %}
+	{% set idCategories = {} %}
+	{% for subCategory in subCategories if "item" == subCategory.type and "Y" == subCategory.linklist %}
+		{# Nur Kategorien berücksichtigen, die für den Mandanten sichtbar sind #}
+		{% for client in subCategory.clients if client.plentyId == services.webstoreConfig.getPlentyId() %}
+			{% set idPositions = idPositions|merge({ ('id_' ~ subCategory.id) : subCategory.details[0].position }) %}
+			{% set idCategories = idCategories|merge({ ('id_' ~ subCategory.id) : subCategory }) %}			
+		{% endfor %}
+	{% endfor %}
+    
+	{# Aktive Sprache festlegen #}
+    {% set urlLanguageCode = (urls.includeLanguage) ? "/" ~ category.details[0].lang : "" %}
+    
+	{# Unterkategorien ausgeben, wenn sie existieren sollten #}
+    {% if idCategories is not empty %}
+    <!-- Unterkategorien Thumbnails -->
+    <div class="widget widget-grid row category-thumbnails">
+    	
+    	{# Kategorien sortiert nach Position ausgeben #}
+    	{% for id, position in idPositions|sort %}
+    	
+        	{# Url der Unterkategorie definieren #}
+            {% set completeUrl = urlLanguageCode ~ request.getRequestUri() ~ "/" ~ idCategories[id].details[0].nameUrl ~ "/" %}
+             
+            
+            {# Details der Unterkategorie in einem Kommentar ausgeben #}
+        	{#<!--{{ idCategories[id] | json_encode(constant('JSON_PRETTY_PRINT')) }}-->#}
+        	
+			<div class="widget-inner col-12 col-sm-12 col-md-3 widget-prop-1-1">
+				<div>
+					<!--<div class="widget widget-image-box widget-image-box-block-caption widget-primary widget-proportional">-->
+					<div class="widget widget-image-box widget-image-box-block-caption widget-secondary widget-proportional prop-xs-1-1">
+						
+						{% if idCategories[id].details[0].image2 %}
+						{% set imagePath = "/documents/" ~ idCategories[id].details[0].image2Path %}
+						<a href="{{ completeUrl }}">
+							<img src="{{ imagePath }}" class="img-fluid">
+						</a>
+						{% endif %}
+						
+						<a href="{{ completeUrl }}" class="widget-inner">
+							<div class="widget-caption">
+								<h2>
+									<i aria-hidden="true" class="fa fa-angle-double-right"></i>
+									{{ idCategories[id].details[0].name }}
+								</h2>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		
+	</div>
+    {% endif %}
+
+        <!-- Ende Kategoriebilder -->
+
+        <div class="list-controls mb-5">
+            <div class="list-controls-inner">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="list-wrapper">
+                            {% include "Ceres::Category.Item.Partials.ItemSorting" with { 'sortingData': searchOptions.sorting, 'selectedSorting': itemSorting } %}
+
+                            {% include "Ceres::Category.Item.Partials.ItemsPerPage" with { 'itemsPerPage': searchOptions.itemsPerPage, 'selectedValue': itemsPerPage } %}
+
+                            {% if overrideSearchFilters | trim is empty %}
+                                <item-filter-list :facet-data="{{ facets | json_encode }}">
+                                    {% if facets | length > 0 %}
+                                        <a class="btn btn-link filter-toggle" href="#filterCollapse">
+                                            <i class="fa fa-sliders default-float" aria-hidden="true"></i> {{ trans("Ceres::Template.itemFilter") }}
+                                        </a>
+                                    {% endif %}
+                                </item-filter-list>
+                            {% else %}
+                                {{ overrideSearchFilters }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# TAGS #}
+            <item-filter-tag-list></item-filter-tag-list>
+        </div>
+
+        {% if ceresConfig.pagination.position in ['top', 'top_bottom'] %}
+            <div class="list-controls mb-5 row">
+                <div class="col-12">
+                    {% include "Ceres::Category.Item.Partials.Pagination" %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+
+            {% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}
+                <div class="col-3 hidden-md-down">
+                    <div class="sidebar-categories">
+                        <div class="category-title">{{ trans("Ceres::Template.itemCategories") }}</div>
+                        {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
+                    </div>
+
+                    {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
+                </div>
+
+            {% endif %}
+
+            <div class="col-12 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}9{% else %}12{% endif %}">
+                <ul class="product-list row grid">
+                    {% for item in itemList %}
+                        <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}4{% else %}3{% endif %}">
+                            <category-item
+                                item-data-ref="{{ item.data | json_data }}"
+                                :decimal-count="{{ ceresConfig.item.storeSpecial }}">
+                                <template #before-prices>{{ LayoutContainer.show("Ceres::CategoryItem.BeforePrices", item.data) }}</template>
+                                <template #after-prices>{{ LayoutContainer.show("Ceres::CategoryItem.AfterPrices", item.data) }}</template>
+
+                                <a href="{{ item.data | itemURL }}" class="small">
+                                    <i class="fa fa-image"></i>
+                                    <span>{{ item.data | itemName }}</span>
+                                </a>
+                            </category-item>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                {% if category is not defined and itemList is empty %}
+                    <p class="h3 text-muted mb-5 text-center">{{ trans("Ceres::Template.itemSearchNoResults", {"searchString": searchString}) }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if ceresConfig.pagination.position in ['bottom', 'top_bottom'] %}
+            <div class="list-controls mb-5 row">
+                <div class="col-12">
+                    {% include "Ceres::Category.Item.Partials.Pagination" %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if category is defined %}
+            <div class="col-12">
+                {% if ceresConfig.item.showCategoryDescriptionBottom in ["description1", "both"] and category.details[0].description | trim is not empty %}
+                    <div class="category-description mb-3">{{ category.details[0].description | raw }}</div>
+                {% endif %}
+                {% if ceresConfig.item.showCategoryDescriptionBottom in ["description2", "both"] and category.details[0].description2 | trim is not empty %}
+                    <div class="category-description mb-3">{{ category.details[0].description2 | raw }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block PartialHead %}
+    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","url": "{{ webstoreConfig.domainSsl }}","potentialAction":{"@type": "SearchAction","target": "{{ webstoreConfig.domainSsl ~ urls.search }}?query={search_term}","query-input": "required name=search_term"}}</script>
+
+    {% set canonicalUrl = services.url.getCanonicalURL() %}
+    {% if currentPage - 1 > 0 %}
+        <link rel="prev" href="{{ canonicalUrl ~ queryString({'page': currentPage - 1}) }}" />
+    {% endif %}
+
+    {% if currentPage + 1 <= pageMax %}
+        <link rel="next" href="{{ canonicalUrl ~ queryString({'page': currentPage + 1}) }}" />
+    {% endif %}
+
+    {% if category is defined %}
+        <title>{% if category.details[0].metaTitle %}{{ category.details[0].metaTitle }}{% else %}{{ category.details[0].name }}{% endif %} | {{ trans("Ceres::Template.headerCompanyName") }}</title>
+
+        <meta name="description" content="{{ category.details[0].metaDescription }}">
+        <meta name="keywords" content="{{ category.details[0].metaKeywords }}">
+        <meta name="robots" content="{% if forceNoIndex or (currentPage >= config("Ceres.pagination.noIndex") and config("Ceres.pagination.noIndex") != 0 )%}NOINDEX{% else %}{{ metaRobots }}{% endif %}">
+    {% else %}
+        <meta name="robots" content="{{ config("Ceres.meta.robots_search_result") }}">
+        <title>{{ trans("Ceres::Template.itemSearchResults") }} {{ searchString }} | {{ trans("Ceres::Template.headerCompanyName") }}</title>
+    {% endif %}
+{% endblock %}
