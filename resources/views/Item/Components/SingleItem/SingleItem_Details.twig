@@ -57,6 +57,11 @@
         <span>
             ${ currentVariation.variation.availability.names.name }
         </span> </span>
+		<!-- Erscheinungsdatum -->
+	<div v-if="new Date(currentVariation.variation.releasedAt) > Date.now()">
+    	Verfügbar ab: ${ new Date(currentVariation.variation.releasedAt).toLocaleDateString() }
+	</div> 
+	<!-- /Erscheinungsdatum -->
 	<div class="row my-3">
 		<div class="w-100">
 			<slot name="before-add-to-basket"></slot>
