@@ -19,7 +19,6 @@
 		
 		<br>
 		<slot name="myproperty"></slot>
-		<slot name="eigenschaft"></slot>
 		
 		{% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 46 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
 		<!-- Testergebnisse -->
@@ -62,7 +61,7 @@
                 ${ variationGraduatedPrice.basePrice | specialOffer(currentVariation.prices, "basePrice") }
             </span> </div>
 	</div>
-	<slot name="after-price"></slot> <span v-if="currentVariation.variation.availability" :class="'availability badge availability_' + currentVariation.variation.availability.id">
+	<slot name="after-price"></slot><slot name="eigenschaft"></slot> <span v-if="currentVariation.variation.availability" :class="'availability badge availability_' + currentVariation.variation.availability.id">
         <span>
             ${ currentVariation.variation.availability.names.name }
         </span> </span>
