@@ -39,12 +39,10 @@
     </template>
 	    <template #eigenschaft>
     {%  for variationProperty in item.documents[0].data.variationProperties %}
-    	 {% if variationProperty.property.id == 1 %}
                    <span class="articlenumber small text-muted">
 					   <b>{{ variationProperty.property.names.name }}: </b>
     	    <span>{{ variationProperty.values.value }}</span>
 					   </span>
-    	{% endif %}
     {% endfor %}
     </template>
 </single-item>
