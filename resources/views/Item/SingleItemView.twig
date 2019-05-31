@@ -1,68 +1,47 @@
-{{ component( "Ceres::Item.Components.VariationSelect" ) }}
-{{ component( "Ceres::Item.Components.ItemImageCarousel" ) }}
-{{ component( "Ceres::Item.Components.AddToWishList" ) }}
-{{ component( "Ceres::Item.Components.OrderProperties" ) }}
-{{ component( "Ceres::Item.Components.OrderPropertyList" ) }}
-{{ component( "CeresCoconut::Item.Components.SingleItem" ) }}
-{{ component( "Ceres::Item.Components.GraduatedPrices" ) }}
-{{ component( "Ceres::Basket.Components.AddToBasket" ) }}
-{{ component( "Ceres::Item.Components.ItemBundle" ) }}
-
+{{ component( "Ceres::Item.Components.VariationSelect" ) }} {{ component( "Ceres::Item.Components.ItemImageCarousel" ) }} {{ component( "Ceres::Item.Components.AddToWishList" ) }} {{ component( "Ceres::Item.Components.OrderProperties" ) }} {{ component( "Ceres::Item.Components.OrderPropertyList" ) }} {{ component( "CeresCoconut::Item.Components.SingleItem" ) }} {{ component( "Ceres::Item.Components.GraduatedPrices" ) }} {{ component( "Ceres::Basket.Components.AddToBasket" ) }} {{ component( "Ceres::Item.Components.ItemBundle" ) }}
 <single-item v-cloak template="#vue-single-item" item-data="{{ item | json_data }}" variation-list-data="{{ variations | json_data }}" :attribute-name-map="{{attributeNameMap | json_encode}}" :variation-units="{{variationUnits | json_encode}}">
-    <template #before-price>{{ LayoutContainer.show("Ceres::SingleItem.BeforePrice", item.documents[0].data) }}</template>
-    <template #after-price>{{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}</template>
-    <template #before-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}</template>
-    <template #after-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data) }}</template>
-    <template #additional-content-after-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.AdditionalContentAfterAddToBasket", item.documents[0].data) }}</template>
-    <template #additional-content-after-vat>{{ LayoutContainer.show("Ceres::SingleItem.AdditionalContentAfterVAT", item.documents[0].data) }}</template>
-    <template #add-detail-tabs>{{ LayoutContainer.show("Ceres::SingleItem.AddDetailTabs", item.documents[0].data) }}</template>
-    <template #add-detail-tabs-content>{{ LayoutContainer.show("Ceres::SingleItem.AddDetailTabsContent", item.documents[0].data) }}</template>
-    <template #item-list-container>{{ LayoutContainer.show("Ceres::SingleItem.ItemListContainer", item) }}</template>
-    <template #feedback-container>{{ LayoutContainer.show("Ceres::SingleItem.FeedbackContainer", item) }}</template>
-    <template #image-carousel>
-        {% set ImageCarouselOverride = LayoutContainer.show("Ceres::SingleItem.ImageCarousel") %}
-        {% if ImageCarouselOverride|trim is empty %}
-            <item-image-carousel image-url-accessor="url" template="#vue-item-image-carousel"></item-image-carousel>
-        {% else %}
-            {{ ImageCarouselOverride }}
-        {% endif %}
-    </template>
-	    <template #myproperty>
-    {% for property in item.documents[0].data.properties %}
-      {% if property.property.id == 19 %}
-        <span class="articlenumber small text-muted">
+	<template #before-price>{{ LayoutContainer.show("Ceres::SingleItem.BeforePrice", item.documents[0].data) }}</template>
+	<template #after-price>{{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}</template>
+	<template #before-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}</template>
+	<template #after-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data) }}</template>
+	<template #additional-content-after-add-to-basket>{{ LayoutContainer.show("Ceres::SingleItem.AdditionalContentAfterAddToBasket", item.documents[0].data) }}</template>
+	<template #additional-content-after-vat>{{ LayoutContainer.show("Ceres::SingleItem.AdditionalContentAfterVAT", item.documents[0].data) }}</template>
+	<template #add-detail-tabs>{{ LayoutContainer.show("Ceres::SingleItem.AddDetailTabs", item.documents[0].data) }}</template>
+	<template #add-detail-tabs-content>{{ LayoutContainer.show("Ceres::SingleItem.AddDetailTabsContent", item.documents[0].data) }}</template>
+	<template #item-list-container>{{ LayoutContainer.show("Ceres::SingleItem.ItemListContainer", item) }}</template>
+	<template #feedback-container>{{ LayoutContainer.show("Ceres::SingleItem.FeedbackContainer", item) }}</template>
+	<template #image-carousel> {% set ImageCarouselOverride = LayoutContainer.show("Ceres::SingleItem.ImageCarousel") %} {% if ImageCarouselOverride|trim is empty %}
+		<item-image-carousel image-url-accessor="url" template="#vue-item-image-carousel"></item-image-carousel> {% else %} {{ ImageCarouselOverride }} {% endif %} </template>
+	<template #myproperty> {% for property in item.documents[0].data.properties %} {% if property.property.id == 19 %} <span class="articlenumber small text-muted">
             <b>{{ property.property.names.name }}: </b>
-            <span>{{ property.texts.value  }}</span><br/>
-        </span>
-     {% endif %}
-    {% endfor %}
-    </template>
-	    <template #eigenschaft>
-    {%  for variationProperty in item.documents[0].data.variationProperties %}
-                   <span class="articlenumber small text-muted">
+            <span>{{ property.texts.value  }}</span>
+		<br/> </span> {% endif %} {% endfor %} </template>
+	<template #eigenschaft> {% for variationProperty in item.documents[0].data.variationProperties %} <span class="articlenumber small text-muted">
 					   {% if variationProperty.property.id == 7 %}<a href="#" data-toggle="modal" data-target="#label1">{% endif %}
 					   <b>{{ variationProperty.property.names.name }}: </b>
-    	    <span>{{ variationProperty.values.value }}</span><br/>{% if variationProperty.property.id == 7 %}</a> <!-- Modal / Dialogfenster -->
-<div class="modal fade" id="label1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal Überschrift</h4>
-      </div>
-      <div class="modal-body">
-       <b>{{ variationProperty.property.names.name }}: </b>
-    	    <span>{{ variationProperty.values.value }}</span><br/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Modal schließen</button>
-        <button type="button" class="btn btn-primary">Änderungen speichern</button>
-      </div>
-    </div>
-  </div>
-</div>
-					   {% endif %}
-					   </span>
-    {% endfor %}
-    </template>
+    	    <span>{{ variationProperty.values.value }}</span>
+		<br/>{% if variationProperty.property.id == 7 %}</a>
+		<!-- Modal / Dialogfenster -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body" style="min-width: 100%;"> <img src="https://cdn02.plentymarkets.com/t8d6ebrty3oo/frontend/Popups/Energieffizienslabel/Energieeffizienslabel.jpg" style="z-index: 10000">
+						<div class="typ" style="z-index: 10001;
+position: absolute;
+top: 90px;
+
+left: 150px;">FISH S2 300</div>
+						<div class="effiziensklasse" style="z-index: 10001;
+position: absolute;
+top: 15px;">C</div>
+						<div class="leistung" style="z-index: 10001; position: absolute;
+top: 350px;
+left: 160px;">{% if variationProperty.property.id == 9 %}{{ variationProperty.values.value }}{% endif %}</div>
+						<div class="fassungsvermögen" style="z-index: 10001; position: absolute;
+top: 430px;
+left: 160px;">{% if variationProperty.property.id == 8 %}{{ variationProperty.values.value }}{% endif %}</div>
+					</div>
+				</div>
+			</div>
+		</div> {% endif %} </span> {% endfor %} </template>
 </single-item>
