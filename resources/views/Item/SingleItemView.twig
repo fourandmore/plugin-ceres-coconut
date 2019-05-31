@@ -32,7 +32,7 @@
       {% if property.property.id == 19 %}
         <span class="articlenumber small text-muted">
             <b>{{ property.property.names.name }}: </b>
-            <span>{{ property.texts.value  }}</span>
+            <span>{{ property.texts.value  }}</span><br/>
         </span>
      {% endif %}
     {% endfor %}
@@ -41,7 +41,7 @@
     {%  for variationProperty in item.documents[0].data.variationProperties %}
                    <span class="articlenumber small text-muted">
 					   <b>{{ variationProperty.property.names.name }}: </b>
-    	    <span>{{ variationProperty.values.value }}</span>
+    	    <span>{{ variationProperty.values.value }}</span><br/>
 					   </span>
     {% endfor %}
     </template>
