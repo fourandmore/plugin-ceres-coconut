@@ -37,4 +37,12 @@
      {% endif %}
     {% endfor %}
     </template>
+	    <template #eigenschaft>
+    {%  for variationProperty in item.documents[0].data.variationProperties %}
+    	 {% if variationProperty.property.id == 6 %}
+                    Name der Eigenschaft mit der ID 1: {{ variationProperty.property.names.name }}
+    	    Wert der Eigenschaft mit der ID 1:   {{ variationProperty.values.value }}
+    	{% endif %}
+    {% endfor %}
+    </template>
 </single-item>
