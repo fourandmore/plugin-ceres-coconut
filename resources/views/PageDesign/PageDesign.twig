@@ -18,4 +18,21 @@
     </div>
   </div>
 </div>
-{% endif %}<!-- Insert markup for page design here -->
+{% endif %}
+
+<!-- Am Ende der Seite -->
+{% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 46 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
+<script>
+ $(document).ready(function() {
+  if (document.cookie.indexOf('visited=true') == -1){
+    // load the overlay
+    $('#MarkisenModal').modal({show:true});
+    
+    var year = 1000*60*20;
+    var expires = new Date((new Date()).valueOf() + year);
+    document.cookie = "visited=true;expires=" + expires.toUTCString();
+
+  }
+});
+</script>
+{% endif %}
