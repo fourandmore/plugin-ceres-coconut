@@ -15,7 +15,12 @@
 		<br>
 		<!-- / Artikel ID --><span class="articlenumber small text-muted">
             <b>{{ trans("Ceres::Template.singleItemNumber") }} </b>
-            <span>${ currentVariation.variation.number }</span> </span> {% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 46 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
+            <span>${ currentVariation.variation.number }</span> </span>
+		
+		<br>
+		<slot name="myproperty"></slot>
+		
+		{% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 46 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
 		<!-- Testergebnisse -->
 		<br> <span class="articlenumber small text-muted">
                               <a class="markisentestlink">

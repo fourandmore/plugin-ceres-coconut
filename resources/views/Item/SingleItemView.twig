@@ -27,4 +27,14 @@
             {{ ImageCarouselOverride }}
         {% endif %}
     </template>
+	    <template #myproperty>
+    {% for property in item.documents[0].data.properties %}
+      {% if property.property.id == 19 %}
+        <span class="articlenumber small text-muted">
+            <b>{{ property.property.names.name }}</b>
+            <span>{{ property.texts.value  }}</span>
+        </span>
+     {% endif %}
+    {% endfor %}
+    </template>
 </single-item>
