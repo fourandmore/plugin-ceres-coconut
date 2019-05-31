@@ -40,8 +40,9 @@
 	    <template #eigenschaft>
     {%  for variationProperty in item.documents[0].data.variationProperties %}
     	 {% if variationProperty.property.id == 1 %}
-                    Name der Eigenschaft mit der ID 1: {{ variationProperty.property.names.name }}
-    	    Wert der Eigenschaft mit der ID 1:   {{ variationProperty.values.value }}
+                   <span><b>{{ variationProperty.property.names.name }}: </b>
+    	    <span>{{ variationProperty.values.value }}</span>
+					   </span>
     	{% endif %}
     {% endfor %}
     </template>
