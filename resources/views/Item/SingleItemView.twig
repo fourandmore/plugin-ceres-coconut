@@ -40,8 +40,28 @@
 	    <template #eigenschaft>
     {%  for variationProperty in item.documents[0].data.variationProperties %}
                    <span class="articlenumber small text-muted">
+					   {% if variationProperty.property.id == 7 %}<a href="#" data-toggle="modal" data-target="#label1">{% endif %}
 					   <b>{{ variationProperty.property.names.name }}: </b>
+    	    <span>{{ variationProperty.values.value }}</span><br/>{% if variationProperty.property.id == 7 %}</a> <!-- Modal / Dialogfenster -->
+<div class="modal fade" id="label1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal Überschrift</h4>
+      </div>
+      <div class="modal-body">
+       <b>{{ variationProperty.property.names.name }}: </b>
     	    <span>{{ variationProperty.values.value }}</span><br/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Modal schließen</button>
+        <button type="button" class="btn btn-primary">Änderungen speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+					   {% endif %}
 					   </span>
     {% endfor %}
     </template>
