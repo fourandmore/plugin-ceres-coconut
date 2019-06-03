@@ -12,10 +12,10 @@
 	<template #feedback-container>{{ LayoutContainer.show("Ceres::SingleItem.FeedbackContainer", item) }}</template>
 	<template #image-carousel> {% set ImageCarouselOverride = LayoutContainer.show("Ceres::SingleItem.ImageCarousel") %} {% if ImageCarouselOverride|trim is empty %}
 		<item-image-carousel image-url-accessor="url" template="#vue-item-image-carousel"></item-image-carousel> {% else %} {{ ImageCarouselOverride }} {% endif %} </template>
-	<template #myproperty> {% for property in item.documents[0].data.properties %} {% if property.property.id == 19 %} <span class="articlenumber small text-muted">
+	<template #myproperty> {% for property in item.documents[0].data.properties %}<span class="articlenumber small text-muted">
             <b>{{ property.property.names.name }}: </b>
             <span>{{ property.texts.value  }}</span>
-		<br/> </span> {% endif %} {% endfor %} </template>
+		<br/> </span>{% endfor %} </template>
 	<template #eigenschaft> {% for variationProperty in item.documents[0].data.variationProperties %} <span class="articlenumber small text-muted">
 					   {% if variationProperty.property.id == 10 %}<a href="{{ variationProperty.values.value }}" target="_blank">{% endif %}
 					   <b>{{ variationProperty.property.names.name }}: </b>
