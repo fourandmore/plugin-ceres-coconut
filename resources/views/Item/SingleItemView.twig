@@ -32,7 +32,12 @@
     	 {% if variationProperty.property.id == 7 %}
 			<span class="articlenumber small text-muted">
             <b>{{ variationProperty.property.names.name }}: </b>
-				{{ variationProperty.values.value }}</span>
+				{{ variationProperty.values.value }}</span><br/>
+    	{% endif %}
+		{% if variationProperty.property.id == 10 %}
+			<span class="articlenumber small text-muted"><a href="{{ variationProperty.values.value }}" target="_blank">
+            <b>{{ variationProperty.property.names.name }}: </b>
+				Download</a></span><br/>
     	{% endif %}
     {% endfor %}
     </template>
