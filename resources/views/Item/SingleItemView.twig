@@ -27,22 +27,13 @@
             {{ ImageCarouselOverride }}
         {% endif %}
     </template>
-    <template #myproperty>
-    {% for property in item.documents[0].data.properties %}
-      {% if property.property.id == 20 %}
-        <span class="articlenumber small text-muted">
-            <b>{{ property.property.names.name }}</b>
-            <span>{{ property.texts.value  }}</span>
-        </span>
-     {% endif %}
+    <template #eigenschaft>
+    {%  for variationProperty in item.documents[0].data.variationProperties %}
+    	 {% if variationProperty.property.id == 7 %}
+			<span class="articlenumber small text-muted">
+            <b>{{ variationProperty.property.names.name }}: </b>
+				{{ variationProperty.values.value }}</span>
+    	{% endif %}
     {% endfor %}
     </template>
-	<template #eigenschaft> {% for variationProperty in item.documents[0].data.variationProperties %} <span class="articlenumber small text-muted">
-		
-		
-		<br/>{% if variationProperty.property.id == 7 %}
-					   <b>{{ variationProperty.property.names.name }}: </b>
-    	    <span>{{ variationProperty.values.value }}</span>{% endif %}
-
-		</span> {% endfor %} </template>
 </single-item>
