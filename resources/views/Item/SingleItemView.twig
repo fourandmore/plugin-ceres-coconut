@@ -38,9 +38,14 @@
     {% endfor %}
     </template>
 	<template #eigenschaft> {% for variationProperty in item.documents[0].data.variationProperties %} <span class="articlenumber small text-muted">
-					   {% if variationProperty.property.id == 10 %}<a href="{{ variationProperty.values.value }}" target="_blank">{% endif %}
+		
+		
+		<br/>{% if variationProperty.property.id == 7 %}
 					   <b>{{ variationProperty.property.names.name }}: </b>
     	    <span>{{ variationProperty.values.value }}</span>
-		<br/>{% if variationProperty.property.id == 10 %}</a>{% endif %}
-	 </span> {% endfor %} </template>
+		
+					   {% if variationProperty.property.id == 10 %}<a href="{{ variationProperty.values.value }}" target="_blank">{% endif %}
+					   <b>{{ variationProperty.property.names.name }}: </b>
+    	    <span>Download</span>{% if variationProperty.property.id == 10 %}</a>{% endif %}
+		</span> {% endfor %} </template>
 </single-item>
