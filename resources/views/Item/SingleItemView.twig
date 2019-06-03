@@ -17,31 +17,9 @@
             <span>{{ property.texts.value  }}</span>
 		<br/> </span> {% endif %} {% endfor %} </template>
 	<template #eigenschaft> {% for variationProperty in item.documents[0].data.variationProperties %} <span class="articlenumber small text-muted">
-					   {% if variationProperty.property.id == 7 %}<a href="#" data-toggle="modal" data-target="#label1">{% endif %}
+					   {% if variationProperty.property.id == 10 %}<a href="{{ variationProperty.values.value }}" target="_blank">{% endif %}
 					   <b>{{ variationProperty.property.names.name }}: </b>
     	    <span>{{ variationProperty.values.value }}</span>
-		<br/>{% if variationProperty.property.id == 7 %}</a>
-		<!-- Modal / Dialogfenster -->
-		<div class="modal fade" id="label1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body" style="max-width: 100%; position:fixed; top:125px;z-index: 1000;"> <img src="https://cdn02.plentymarkets.com/t8d6ebrty3oo/frontend/Popups/Energieffizienslabel/Energieeffizienslabel.jpg">
-						<div class="typ" style="
-position: absolute;
-top: 90px;
-
-left: 150px;">FISH S2 300</div>
-						<div class="effiziensklasse" style="
-position: absolute;
-top: 15px;">C</div>
-						<div class="leistung" style=" position: absolute;
-top: 350px;
-left: 160px;">{% if variationProperty.property.id == 9 %}{{ variationProperty.values.value }}{% endif %}</div>
-						<div class="fassungsvermögen" style=" position: absolute;
-top: 430px;
-left: 160px;">{% if variationProperty.property.id == 8 %}{{ variationProperty.values.value }}{% endif %}</div>
-					</div>
-				</div>
-			</div>
-		</div> {% endif %} </span> {% endfor %} </template>
+		<br/>{% if variationProperty.property.id == 10 %}</a>{% endif %}
+	 </span> {% endfor %} </template>
 </single-item>
