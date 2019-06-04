@@ -29,18 +29,8 @@
     </template>
     <template #eigenschaft>
     {%  for variationProperty in item.documents[0].data.variationProperties %}
-    	 {% if variationProperty.property.id == 7 %}
-			<div class="a++"  style="height:50px; width: 100px;">
-                        		<img src="https://cdn02.plentymarkets.com/t8d6ebrty3oo/frontend/Energieeffizienz/A__.png">
-</div><br/>
-    	{% endif %}
-		{% if variationProperty.property.id == 10 %}
-			<span class="articlenumber small text-muted"><a href="{{ variationProperty.values.value }}" target="_blank">
-            <b>{{ variationProperty.property.names.name }}: </b>
-				Download</a></span><br/>
-    	{% endif %}
 		{% if variationProperty.property.id == 7 %}
-			<div class="arrow" style="height:50px; width: 100px;">
+			<div class="a++" style="height:50px; width: 100px;">
 		    {%  for variationProperty in item.documents[0].data.variationProperties %}
 	
 				{% if variationProperty.property.id == 10 %}
