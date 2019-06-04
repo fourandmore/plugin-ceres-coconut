@@ -39,12 +39,12 @@
             <b>{{ variationProperty.property.names.name }}: </b>
 				Download</a></span><br/>
     	{% endif %}
-		{% if variationProperty.property.id == 7 %}{% if variationProperty.property.id == 10 %}
-			<a href="{{ variationProperty.values.value }}" target="_blank">{% endif %}
-			<div class="arrow" style="height:75px; width: 150px; background-color: forestgreen;">
-            {{ variationProperty.property.names.name }}:
-				</div>{% if variationProperty.property.id == 10 %}
-			</a>{% endif %}<br/>
+		{% if variationProperty.property.id == 7 %}			<div class="arrow" style="height:50px; width: 100px;">
+{% if variationProperty.property.id == 10 %}
+			<a href="{{ variationProperty.values.value }}" target="_blank">
+            <img src="https://cdn02.plentymarkets.com/t8d6ebrty3oo/frontend/Energieeffizienz/A__.png">
+				
+			</a>{% endif %}<br/></div>
     	{% endif %}
     {% endfor %}
     </template>
