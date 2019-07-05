@@ -1,1 +1,4 @@
-[]
+    "variationProperties",
+    "properties.texts.*"
+
+/*zusätzlich zu Ceres Result Fields*/

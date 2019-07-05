@@ -224,4 +224,12 @@
     	{% endif %}
     {% endfor %}
     </template>
+	
+	<template #produktdatenblatt>
+	{% if variationProperty.property.id == 29 %}
+					<a href="{{ variationProperty.values.value }}" target="_blank">
+            		Produktdatenblatt
+					</a>
+				{% endif %}<br/>
+	</template>
 </single-item>
