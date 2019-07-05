@@ -226,10 +226,12 @@
     </template>
 	
 	<template #produktdatenblatt>
+		{%  for variationProperty in item.documents[0].data.variationProperties %}
 	{% if variationProperty.property.id == 29 %}
 					<a href="{{ variationProperty.values.value }}" target="_blank">
             		Produktdatenblatt
 					</a>
 				{% endif %}
+		{% endfor %}
 	</template>
 </single-item>
