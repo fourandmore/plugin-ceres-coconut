@@ -9,9 +9,6 @@
     "namespace"         :   "CeresCoconut",
     "author"            :   "plentysystems AG",
     "type"              :   "theme",
-    "require"           :   {
-                                "Ceres":">= 4.0.1"
-                            },
     "serviceProvider"   :   "CeresCoconut\\Providers\\CeresCoconutServiceProvider",
     "dataProviders"     :
     [
