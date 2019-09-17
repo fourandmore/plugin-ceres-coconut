@@ -10,7 +10,7 @@
     v-for="value in attribute.values"
     :value="value.attributeValueId"
     :selected="value.attributeValueId === selectedAttributes[attribute.attributeId]"
-    v-if="isAttributeSelectionValid(attribute.attributeId, value.attributeValueId)">
+    :disabled="!isAttributeSelectionValid(attribute.attributeId, value.attributeValueId)">
     ${ value.name }
 </option>
                     </select>
