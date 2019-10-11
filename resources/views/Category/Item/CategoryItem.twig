@@ -40,9 +40,6 @@
 		
 		
 		 <!-- Kategoriebilder -->
-	{% for subCategory in subCategories if “item” == subCategory.type and “Y” == subCategory.linklist %} {% set isActiveForClient = false %} {% for client in subCategory.clients %} {% if client.plentyId == webstoreConfig.webstoreId %} {% set isActiveForClient = true %} {% endif %} {% endfor %} {% if isActiveForClient %}	
-		
-		
 	{# Alle Unterkategorien dieser Kategorie auslesen #}
     {% set subCategories = services.category.getChildren(category.id) %}
 	
@@ -102,8 +99,6 @@
 		
 	</div>
     {% endif %}
-		
-	 {% endif %} {% endfor %}	
 
         <!-- Ende Kategoriebilder -->
 		
