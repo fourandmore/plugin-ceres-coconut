@@ -40,6 +40,9 @@
 		
 		
 		 <!-- Kategoriebilder -->
+	{% for subCategory in subCategories if “item” == subCategory.type and “Y” == subCategory.linklist %} {% set isActiveForClient = false %} {% for client in subCategory.clients %} {% if client.plentyId == webstoreConfig.webstoreId %} {% set isActiveForClient = true %} {% endif %} {% endfor %} {% if isActiveForClient %}	
+		
+		
 	{# Alle Unterkategorien dieser Kategorie auslesen #}
     {% set subCategories = services.category.getChildren(category.id) %}
 	
@@ -99,84 +102,11 @@
 		
 	</div>
     {% endif %}
+		
+	 {% endif %} {% endfor %}	
 
         <!-- Ende Kategoriebilder -->
 		
-	<!--
- / Category-Thumbnails
- / 
- / Shows thumbnails for all subcategories of active category.
- / Uses the image2 relation of each category.
- / 
- / @author     Michael Schmidt <info@spet.de>
- / @copyright  2019 Spet. GmbH
- / @license    Open Source
- / @version    2019.08.15.1 (Ceres 4.1.2, CeresCoconut 1.0.7)
- / @link       http://www.spet.de/2019/04/02/kategorie-thumbnails-in-ceres-kategorien-ausgeben/
- / @since      19. March 2019
- -->
-{% if(true) %}
-	{# Alle Unterkategorien dieser Kategorie auslesen #}
-	{% set subCategories = services.category.getChildren(category.id) %}
-	
-	{# Nur aktive Unterkategorien berücksichtigen und in benötigte Arrays für die Sortierung nach Position einfügen #}
-	{% set idPositions = {} %}
-	{% set idCategories = {} %}
-	{% for subCategory in subCategories if "item" == subCategory.type and "Y" == subCategory.linklist %}
-		{# Nur Kategorien berücksichtigen, die für den Mandanten sichtbar sind #}
-		{% for client in subCategory.clients if client.plentyId == services.webstoreConfig.getPlentyId() %}
-			{% set idPositions = idPositions|merge({ ('id_' ~ subCategory.id) : subCategory.details[0].position }) %}
-			{% set idCategories = idCategories|merge({ ('id_' ~ subCategory.id) : subCategory }) %}			
-		{% endfor %}
-	{% endfor %}
-	
-	{# Aktive Sprache festlegen #}
-	{% set urlLanguageCode = (urls.includeLanguage) ? "/" ~ category.details[0].lang : "" %}
-	
-	{# Unterkategorien ausgeben, wenn sie existieren sollten #}
-	{% if idCategories is not empty %}
-	<!-- Unterkategorien Thumbnails -->
-	<div class="widget widget-grid row category-thumbnails">
-		
-		{# Kategorien sortiert nach Position ausgeben #}
-		{% for id, position in idPositions|sort %}
-		
-			{# Url der Unterkategorie definieren #}
-			{% set completeUrl = "/" ~ request.get("plentyMarkets") ~ "/" ~ idCategories[id].details[0].nameUrl ~ "/" %}
-			
-			{# Details der Unterkategorie in einem Kommentar ausgeben #}
-			{#<!--{{ idCategories[id] | json_encode(constant('JSON_PRETTY_PRINT')) }}-->#}
-			
-			<div class="widget-inner col-5 col-sm-3 col-md-2 widget-prop-1-1">
-				<div>
-					<!--<div class="widget widget-image-box widget-image-box-block-caption widget-primary widget-proportional">-->
-					<div class="widget widget-image-box widget-image-box-block-caption widget-primary widget-proportional prop-xs-1-1">
-						
-						{% if idCategories[id].details[0].image2 %}
-						{% set imagePath = "/documents/" ~ idCategories[id].details[0].image2Path %}
-						<a href="{{ completeUrl }}">
-							<img src="{{ imagePath }}" class="img-cover">
-						</a>
-						{% endif %}
-						
-						<a href="{{ completeUrl }}" class="widget-inner">
-							<div class="widget-caption">
-								<h2>
-									<i aria-hidden="true" class="fa fa-angle-double-right"></i>
-									{{ idCategories[id].details[0].name }}
-								</h2>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-		
-	</div>
-	{% endif %}
-{% endif %}
-		
-		<!-- Ende Kategorie Bilder nue -->
 
         <div class="list-controls mb-5">
             <div class="list-controls-inner">
