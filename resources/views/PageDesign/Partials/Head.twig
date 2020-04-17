@@ -229,7 +229,9 @@
 
 <!-- Eigenes -->
 
+<!-- Eigenes -->
 
+{% if services.template.getCurrentTemplate() == 'tpl.confirmation' %}
 
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -256,5 +258,8 @@ dataLayer.push({
 ]
 });
 </script>
+
+{% endif %}
+
 
 
