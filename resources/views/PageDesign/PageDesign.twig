@@ -244,40 +244,7 @@
     {% include "Ceres::Widgets.ShopBuilderDataStore" %}
 {% endif %}
 
-<!-- START VARIATION SELECT -->
 
-<script type="x/template" data-component="variation-select">
-       
-        <div v-if="attributes.length || (Object.keys(possibleUnits).length > 1 && isContentVisible)" class="row">
-            <div class="col-12 variation-select" v-for="attribute in attributes">
-                <!-- dropdown -->
-                <div class="input-unit" ref="attributesContaner" v-if="attribute.type === 'dropdown'">
-                    <select class="custom-select" @change="selectAttribute(attribute.attributeId, $event.target.value)">
-                        <option :value="-1" v-if="addPleaseSelectOption || !hasSelection">${ $translate("Ceres::Template.singleItemPleaseSelect") }</option>
-                        <option
-                                :value="null" v-if="hasEmptyOption || selectedAttributes[attribute.attributeId] === null"
-                                :selected="selectedAttributes[attribute.attributeId] === null">${ $translate("Ceres::Template.singleItemNoSelection") }</option>
-						<option
-    						v-for="value in attribute.values"
-    						:value="value.attributeValueId"
-    						:selected="value.attributeValueId === selectedAttributes[attribute.attributeId]"
-    						v-if="isAttributeSelectionValid(attribute.attributeId, value.attributeValueId)">
-    						${ value.name }
-						</option>
-                    </select>
-                    <label v-tooltip="isTextCut(attribute.name)" data-toggle="tooltip" data-placement="top" :title="attribute.name">${ attribute.name }</label>
-                </div>
-                <!-- /dropdown -->
-            </div>
-        </div>
-
-        <div v-else>
-            <slot></slot>
-        </div>
-    
-</script>  
-
-<!-- END VARIATION SELECT -->
 
 {{ LayoutContainer.show("Ceres::Script.AfterScriptsLoaded") }}
 
