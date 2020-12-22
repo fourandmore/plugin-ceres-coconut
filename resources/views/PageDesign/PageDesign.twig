@@ -6,14 +6,14 @@
 {{ component( "Ceres::Customer.Components.ForgotPassword" ) }}
 
 {% if isShopBuilder %}
-    {% include "Ceres::Widgets.WidgetComponents" %}
+{% include "Ceres::Widgets.WidgetComponents" %}
 {% endif %}
 
 {% set currencyFormat = config("Ceres.currency.format") %}
 {% set defaultLanguage = webstoreConfig.defaultLanguage %}
 
 {% if request.get('openBasketPreview') == 1 %}
-    {% set openBasketClass = "open-" ~ ceresConfig.basket.previewType %}
+{% set openBasketClass = "open-" ~ ceresConfig.basket.previewType %}
 {% endif %}
 
 <!DOCTYPE html>
@@ -26,228 +26,470 @@
     {% include getPartial('head') %}
 
     {% block PartialHead %}
-        {% embed getPartial('page-metadata') %}{% endembed %}
+    {% embed getPartial('page-metadata') %}{% endembed %}
     {% endblock %}
 
     {% for styleTemplate in get_additional_styles() %}
-        {% include styleTemplate.path ignore missing with styleTemplate.params %}
+    {% include styleTemplate.path ignore missing with styleTemplate.params %}
     {% endfor %}
 
     {% if assetName == 'ceres-checkout' %}
-        {{ LayoutContainer.show("Ceres::Checkout.Styles") }}
+    {{ LayoutContainer.show("Ceres::Checkout.Styles") }}
     {% endif %}
     {% if services.template.getCurrentTemplate() == "tpl.item" %}
-        {{ LayoutContainer.show("Ceres::SingleItem.Styles") }}
+    {{ LayoutContainer.show("Ceres::SingleItem.Styles") }}
     {% endif %}
 </head>
 
 <body class="{{ bodyClasses | join(' ') }}">
-	
-<!-- Consent Banner -->	
-	<link rel="stylesheet" href="https://cdn.consentmanager.mgr.consensu.org/delivery/cmp.min.css" />
-	<script>function cmp_getlang(j){if(typeof(j)!="boolean"){j=true}if(j&&typeof(cmp_getlang.usedlang)=="string"&&cmp_getlang.usedlang!==""){return cmp_getlang.usedlang}var g=["DE","EN","FR","IT","NO","DA","FI","ES","PT","RO","BG","ET","EL","GA","HR","LV","LT","MT","NL","PL","SV","SK","SL","CS","HU","RU"];var c=[];var f=location.hash;var e=location.search;var a="languages" in navigator?navigator.languages:[];if(f.indexOf("cmplang=")!=-1){c.push(f.substr(f.indexOf("cmplang=")+8,2))}else{if(e.indexOf("cmplang=")!=-1){c.push(e.substr(e.indexOf("cmplang=")+8,2))}else{if(a.length>0){for(var d=0;d<a.length;d++){c.push(a[d])}}}}if("language" in navigator){c.push(navigator.language)}if("userLanguage" in navigator){c.push(navigator.userLanguage)}var h="";for(var d=0;d<c.length;d++){var b=c[d].toUpperCase();if(b.indexOf("-")!=-1){b=b.substr(0,2)}if(g.indexOf(b)!=-1){h=b;break}}if(h==""){h="EN"}h=h.toUpperCase();return h}(function(){window.gdprAppliesGlobally=true;window.cmp_id=3703;window.cmp_params="";window.cmp_host="consentmanager.mgr.consensu.org";window.cmp_cdn="cdn.consentmanager.mgr.consensu.org";var a="";var c="";if("cmp_getlang" in window){a=window.cmp_getlang().toLowerCase();c="_"+a}var b=document.createElement("script");b.src="https://"+window.cmp_host+"/delivery/cmp.php?id="+window.cmp_id+"&h="+encodeURIComponent(location.href)+"&"+window.cmp_params+(document.cookie.length>0?"&__cmpfcc=1":"")+"&l="+a+"&o="+(new Date()).getTime();b.type="text/javascript";b.async=true;if(document.body){document.body.appendChild(b)}else{if(document.currentScript){document.currentScript.parentElement.appendChild(b)}else{document.write(b.outerHTML)}}var b=document.createElement("script");b.src="https://"+window.cmp_cdn+"/delivery/cmp"+c+".min.js";b.type="text/javascript";b.async=true;if(document.body){document.body.appendChild(b)}else{if(document.currentScript){document.currentScript.parentElement.appendChild(b)}else{document.write(b.outerHTML)}}window.cmp_addFrame=function(){if(!window.frames.__cmpLocator){if(document.body){var d=document.createElement("iframe");d.style.cssText="display:none";d.name="__cmpLocator";document.body.appendChild(d)}else{window.setTimeout("window.cmp_addFrame()",10)}}};window.cmp_addFrame();window.cmp_stub=function(){var d=arguments;__cmp.a=__cmp.a||[];if(!d.length){return __cmp.a}else{if(d[0]==="ping"){d[2]({gdprAppliesGlobally:gdprAppliesGlobally,cmpLoaded:false},true)}else{if(d.length==4&&d[3]===false){d[2]({},false)}else{__cmp.a.push([].slice.apply(d))}}}};window.cmp_msghandler=function(h){var d=typeof h.data==="string";try{var g=d?JSON.parse(h.data):h.data}catch(j){var g=null}if(typeof(g)==="object"&&g!==null&&"__cmpCall" in g){var f=g.__cmpCall;window.__cmp(f.command,f.parameter,function(k,i){var e={__cmpReturn:{returnValue:k,success:i,callId:f.callId}};h.source.postMessage(d?JSON.stringify(e):e,"*")})}};if(typeof(__cmp)!=="function"&&typeof(__cmp)!=="object"&&(typeof(__cmp)==="undefined"||__cmp!==null)){window.__cmp=window.cmp_stub;__cmp.msgHandler=window.cmp_msghandler;if(window.addEventListener){window.addEventListener("message",window.cmp_msghandler,false)}else{window.attachEvent("onmessage",window.cmp_msghandler)}}})();</script>
-<!-- End Consent Banner -->	
 
-{{ LayoutContainer.show("Ceres::PageDesign.AfterOpeningBodyTag") }}
+    <!-- Consent Banner -->
+    <link rel="stylesheet" href="https://cdn.consentmanager.mgr.consensu.org/delivery/cmp.min.css" />
+    <script>
+        function cmp_getlang(j) {
+            if (typeof(j) != "boolean") {
+                j = true
+            }
+            if (j && typeof(cmp_getlang.usedlang) == "string" && cmp_getlang.usedlang !== "") {
+                return cmp_getlang.usedlang
+            }
+            var g = ["DE", "EN", "FR", "IT", "NO", "DA", "FI", "ES", "PT", "RO", "BG", "ET", "EL", "GA", "HR", "LV", "LT", "MT", "NL", "PL", "SV", "SK", "SL", "CS", "HU", "RU"];
+            var c = [];
+            var f = location.hash;
+            var e = location.search;
+            var a = "languages" in navigator ? navigator.languages : [];
+            if (f.indexOf("cmplang=") != -1) {
+                c.push(f.substr(f.indexOf("cmplang=") + 8, 2))
+            } else {
+                if (e.indexOf("cmplang=") != -1) {
+                    c.push(e.substr(e.indexOf("cmplang=") + 8, 2))
+                } else {
+                    if (a.length > 0) {
+                        for (var d = 0; d < a.length; d++) {
+                            c.push(a[d])
+                        }
+                    }
+                }
+            }
+            if ("language" in navigator) {
+                c.push(navigator.language)
+            }
+            if ("userLanguage" in navigator) {
+                c.push(navigator.userLanguage)
+            }
+            var h = "";
+            for (var d = 0; d < c.length; d++) {
+                var b = c[d].toUpperCase();
+                if (b.indexOf("-") != -1) {
+                    b = b.substr(0, 2)
+                }
+                if (g.indexOf(b) != -1) {
+                    h = b;
+                    break
+                }
+            }
+            if (h == "") {
+                h = "EN"
+            }
+            h = h.toUpperCase();
+            return h
+        }(function() {
+            window.gdprAppliesGlobally = true;
+            window.cmp_id = 3703;
+            window.cmp_params = "";
+            window.cmp_host = "consentmanager.mgr.consensu.org";
+            window.cmp_cdn = "cdn.consentmanager.mgr.consensu.org";
+            var a = "";
+            var c = "";
+            if ("cmp_getlang" in window) {
+                a = window.cmp_getlang().toLowerCase();
+                c = "_" + a
+            }
+            var b = document.createElement("script");
+            b.src = "https://" + window.cmp_host + "/delivery/cmp.php?id=" + window.cmp_id + "&h=" + encodeURIComponent(location.href) + "&" + window.cmp_params + (document.cookie.length > 0 ? "&__cmpfcc=1" : "") + "&l=" + a + "&o=" + (new Date()).getTime();
+            b.type = "text/javascript";
+            b.async = true;
+            if (document.body) {
+                document.body.appendChild(b)
+            } else {
+                if (document.currentScript) {
+                    document.currentScript.parentElement.appendChild(b)
+                } else {
+                    document.write(b.outerHTML)
+                }
+            }
+            var b = document.createElement("script");
+            b.src = "https://" + window.cmp_cdn + "/delivery/cmp" + c + ".min.js";
+            b.type = "text/javascript";
+            b.async = true;
+            if (document.body) {
+                document.body.appendChild(b)
+            } else {
+                if (document.currentScript) {
+                    document.currentScript.parentElement.appendChild(b)
+                } else {
+                    document.write(b.outerHTML)
+                }
+            }
+            window.cmp_addFrame = function() {
+                if (!window.frames.__cmpLocator) {
+                    if (document.body) {
+                        var d = document.createElement("iframe");
+                        d.style.cssText = "display:none";
+                        d.name = "__cmpLocator";
+                        document.body.appendChild(d)
+                    } else {
+                        window.setTimeout("window.cmp_addFrame()", 10)
+                    }
+                }
+            };
+            window.cmp_addFrame();
+            window.cmp_stub = function() {
+                var d = arguments;
+                __cmp.a = __cmp.a || [];
+                if (!d.length) {
+                    return __cmp.a
+                } else {
+                    if (d[0] === "ping") {
+                        d[2]({
+                            gdprAppliesGlobally: gdprAppliesGlobally,
+                            cmpLoaded: false
+                        }, true)
+                    } else {
+                        if (d.length == 4 && d[3] === false) {
+                            d[2]({}, false)
+                        } else {
+                            __cmp.a.push([].slice.apply(d))
+                        }
+                    }
+                }
+            };
+            window.cmp_msghandler = function(h) {
+                var d = typeof h.data === "string";
+                try {
+                    var g = d ? JSON.parse(h.data) : h.data
+                } catch (j) {
+                    var g = null
+                }
+                if (typeof(g) === "object" && g !== null && "__cmpCall" in g) {
+                    var f = g.__cmpCall;
+                    window.__cmp(f.command, f.parameter, function(k, i) {
+                        var e = {
+                            __cmpReturn: {
+                                returnValue: k,
+                                success: i,
+                                callId: f.callId
+                            }
+                        };
+                        h.source.postMessage(d ? JSON.stringify(e) : e, "*")
+                    })
+                }
+            };
+            if (typeof(__cmp) !== "function" && typeof(__cmp) !== "object" && (typeof(__cmp) === "undefined" || __cmp !== null)) {
+                window.__cmp = window.cmp_stub;
+                __cmp.msgHandler = window.cmp_msghandler;
+                if (window.addEventListener) {
+                    window.addEventListener("message", window.cmp_msghandler, false)
+                } else {
+                    window.attachEvent("onmessage", window.cmp_msghandler)
+                }
+            }
+        })();
+    </script>
+    <!-- End Consent Banner -->
 
-<script>
-    if('ontouchstart' in document.documentElement)
-    {
-        document.body.classList.add("touch");
-    }
-    else
-    {
-        document.body.classList.add("no-touch");
-    }
-</script>
-<div id="vue-app" class="app{% if openBasketClass is not empty %} {{ openBasketClass }}{% endif %}">
-    <!-- messages -->
-    <notifications template="#vue-notifications" :initial-notifications="{{ notifications | json_encode() }}"></notifications>
+    {{ LayoutContainer.show("Ceres::PageDesign.AfterOpeningBodyTag") }}
 
-    {% include getPartial('header') %}
+    <script>
+        if ('ontouchstart' in document.documentElement) {
+            document.body.classList.add("touch");
+        } else {
+            document.body.classList.add("no-touch");
+        }
+    </script>
+    <div id="vue-app" class="app{% if openBasketClass is not empty %} {{ openBasketClass }}{% endif %}">
+        <!-- messages -->
+        <notifications template="#vue-notifications" :initial-notifications="{{ notifications | json_encode() }}"></notifications>
 
-    <div id="page-body" class="main">
-        {% block PageBody %}{% endblock %}
-    </div>
+        {% include getPartial('header') %}
 
-    {% include getPartial('footer') %}
+        <div id="page-body" class="main">
+            {% block PageBody %}{% endblock %}
+        </div>
 
-    {% block PartialFooter %}{% endblock %}
+        {% include getPartial('footer') %}
 
-    <!-- LOGIN MODAL -->
-    <div id="login-modal-wrapper">
-        <div class="modal fade login-modal" id="login" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title h3">{{ trans("Ceres::Template.login") }}</div>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        {% block PartialFooter %}{% endblock %}
+
+        <!-- LOGIN MODAL -->
+        <div id="login-modal-wrapper">
+            <div class="modal fade login-modal" id="login" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title h3">{{ trans("Ceres::Template.login") }}</div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <lazy-load component="login-modal">
+                            <login modal-element="login-modal-wrapper">
+                                <template #extend-overlay-buttons>
+                                    {{ LayoutContainer.show("Ceres::LoginOverlay.ExtendOverlayButtons") }}
+                                </template>
+                            </login>
+                        </lazy-load>
                     </div>
-                    <lazy-load component="login-modal">
-                        <login modal-element="login-modal-wrapper">
-                            <template #extend-overlay-buttons>
-                                {{ LayoutContainer.show("Ceres::LoginOverlay.ExtendOverlayButtons") }}
-                            </template>
-                        </login>
+                </div>
+            </div>
+        </div>
+        <!-- ./LOGIN MODAL -->
+
+        <!-- REGISTRATION MODAL -->
+        <div id="simple-registration-modal-wrapper">
+            <div class="modal fade" id="registration" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <lazy-load component="register-modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title h3">
+                                    {{ trans("Ceres::Template.regCreateAccount") }}
+
+                                </div>
+
+                                <popper v-cloak class="ml-auto">
+                                    <template #handle>
+                                        <button class="btn btn-icon btn-secondary btn-sm">
+                                            <i class="fa fa-info"></i>
+                                        </button>
+                                    </template>
+                                    <template #title>
+                                        {{ trans("Ceres::Template.regContactInformations") }}
+                                    </template>
+                                    <template #content>
+                                        <ul class='pl-3'>
+                                            <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText1') }}</li>
+                                            <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText2') }}</li>
+                                            <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText3') }}</li>
+                                            <li>{{ trans('Ceres::Template.regContactInfoText4') }}</li>
+                                        </ul>
+                                    </template>
+                                </popper>
+
+                                <button type="button" class="close ml-0" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <registration :is-simple-registration="true" modal-element="simple-registration-modal-wrapper">
+                                    <template #extend-overlay-buttons>
+                                        {{ LayoutContainer.show("Ceres::RegistrationOverlay.ExtendOverlayButtons") }}
+                                    </template>
+                                    <template #custom-address-fields>
+                                        {{ LayoutContainer.show("Ceres::Checkout.CustomAddressField") }}
+                                    </template>
+                                </registration>
+                            </div>
+                        </div>
                     </lazy-load>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ./LOGIN MODAL -->
+        <!-- ./REGISTRATION MODAL -->
 
-    <!-- REGISTRATION MODAL -->
-    <div id="simple-registration-modal-wrapper">
-        <div class="modal fade" id="registration" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <lazy-load component="register-modal">
+        <!-- BASKET MODAL -->
+        <lazy-load component="add-item-to-basket-overlay">
+            <add-item-to-basket-overlay>
+                <template slot="extendOverlayButtons">
+                    {{ LayoutContainer.show("Ceres::Basket.ExtendOverlayButtons") }}
+                </template>
+            </add-item-to-basket-overlay>
+        </lazy-load>
+        <!-- ./BASKET MODAL -->
+
+        <!-- PASSWORD RESET MODAL -->
+        <lazy-load component="forgot-password-modal">
+            <forgot-password-modal :current-template="{{ services.template.getCurrentTemplate() | json_encode }}">
+                <template slot="extendOverlayButtons">
+                    {{ LayoutContainer.show("Ceres::LoginOverlay.ExtendOverlayButtons") }}
+                </template>
+            </forgot-password-modal>
+        </lazy-load>
+        <!-- ./PASSWORD RESET MODAL -->
+
+        <!-- SHIPPINGCOSTS MODAL -->
+        {% if ceresConfig.global.shippingCostsCategoryId > 0 %}
+        <div id="shippingscosts-modal-wrapper">
+            <div class="modal fade" id="shippingscosts" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <div class="modal-title h3">
-                                {{ trans("Ceres::Template.regCreateAccount") }}
-
-                            </div>
-
-                            <popper v-cloak class="ml-auto">
-                                <template #handle>
-                                    <button class="btn btn-icon btn-secondary btn-sm">
-                                        <i class="fa fa-info"></i>
-                                    </button>
-                                </template>
-                                <template #title>
-                                    {{ trans("Ceres::Template.regContactInformations") }}
-                                </template>
-                                <template #content>
-                                    <ul class='pl-3'>
-                                        <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText1') }}</li>
-                                        <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText2') }}</li>
-                                        <li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText3') }}</li>
-                                        <li>{{ trans('Ceres::Template.regContactInfoText4') }}</li>
-                                    </ul>
-                                </template>
-                            </popper>
-
-                            <button type="button" class="close ml-0" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <div class="modal-title h3">{{ trans('Ceres::Template.shippingInfoCosts') }}</div>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <registration :is-simple-registration="true" modal-element="simple-registration-modal-wrapper">
-                                <template #extend-overlay-buttons>
-                                    {{ LayoutContainer.show("Ceres::RegistrationOverlay.ExtendOverlayButtons") }}
-                                </template>
-                                <template #custom-address-fields>
-                                    {{ LayoutContainer.show("Ceres::Checkout.CustomAddressField") }}
-                                </template>
-                            </registration>
-                        </div>
-                    </div>
-                </lazy-load>
-            </div>
-        </div>
-    </div>
-    <!-- ./REGISTRATION MODAL -->
-
-    <!-- BASKET MODAL -->
-    <lazy-load component="add-item-to-basket-overlay">
-        <add-item-to-basket-overlay>
-            <template slot="extendOverlayButtons">
-                {{ LayoutContainer.show("Ceres::Basket.ExtendOverlayButtons") }}
-            </template>
-        </add-item-to-basket-overlay>
-    </lazy-load>
-    <!-- ./BASKET MODAL -->
-
-    <!-- PASSWORD RESET MODAL -->
-    <lazy-load component="forgot-password-modal">
-        <forgot-password-modal :current-template="{{ services.template.getCurrentTemplate() | json_encode }}">
-            <template slot="extendOverlayButtons">
-                {{ LayoutContainer.show("Ceres::LoginOverlay.ExtendOverlayButtons") }}
-            </template>
-        </forgot-password-modal>
-    </lazy-load>
-    <!-- ./PASSWORD RESET MODAL -->
-
-    <!-- SHIPPINGCOSTS MODAL -->
-    {% if ceresConfig.global.shippingCostsCategoryId > 0 %}
-    <div id="shippingscosts-modal-wrapper">
-        <div class="modal fade" id="shippingscosts" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title h3">{{ trans('Ceres::Template.shippingInfoCosts') }}</div>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        {% set shopBuilderShippingTemplate = shop_builder_category_template(ceresConfig.global.shippingCostsCategoryId) %}
-                        {% if shopBuilderShippingTemplate | trim is not empty %}
+                            {% set shopBuilderShippingTemplate = shop_builder_category_template(ceresConfig.global.shippingCostsCategoryId) %}
+                            {% if shopBuilderShippingTemplate | trim is not empty %}
                             {{ shopBuilderShippingTemplate | raw }}
-                        {% else %}
+                            {% else %}
                             {% include category_template(ceresConfig.global.shippingCostsCategoryId, lang, webstoreConfig.webstoreId) ignore missing %}
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
+        <!-- ./SHIPPINGCOSTS MODAL -->
+        
+        <!-- MarkisenModal -->{% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 924 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Wir haben geschlossen vom 23.12.2019 bis einschließlich 02.01.2020. Unser letzter Versandtag in 2019 ist der 19.12.2019, der erste Versandtag in 2020 ist der 03.01.2020.</p>
+                    </div>
+                </div>
+            </div>
+        </div> {% endif %}
+        <!-- ./Modal Markisen -->
+
+
     </div>
-    {% endif %}
-    <!-- ./SHIPPINGCOSTS MODAL -->
-</div>
 
-<script>
-    App = {
-        config: {{ ceresConfig | json_encode | raw }},
-        urls: {{ urls | json_encode | raw }},
-        activeCurrency: "{{ currencyData[currencyFormat] }}",
-        currencyPattern: {{  services.checkout.getCurrencyPattern() | json_encode | raw }},
-        isCategoryView: {% if services.template.isCategory() == "1" %}true{% else %}false{% endif %},
-        isCheckoutView : {% if services.template.isCheckout() == "1" %}true{% else %}false{% endif %},
-        isSearch: {% if services.template.isSearch() == "1" %}true{% else %}false{% endif %},
-        isItemView: {% if services.template.getCurrentTemplate() == "tpl.item" %}true{% else %}false{% endif %},
-        templateEvent: "{{ templateEvent }}",
-        templateType: "{{ urls.templateType }}",
-        language: "{{ lang }}",
-        defaultLanguage: "{{ defaultLanguage }}",
-        decimalSeparator: "{{ config("IO.format.separator_decimal") }}",
-        urlTrailingSlash: {{ urls.appendTrailingSlash | json_encode }},
-        propertyFileUrl: "{{ services.propertyFile.getPropertyFileUrl() }}",
-        isShopBuilder: {{ isShopBuilder | default(false) | json_encode }},
-        bundleSetting: {{ webstoreConfig.dontSplitItemBundle }},
-        initialPleaseSelect: {{ webstoreConfig.attributeSelectDefaultOption }},
-        publicPath: "{{ plugin_path('Ceres') ~ '/js/dist/' }}",
-        isCheapestSorting: "{{ services.template.isCheapestSorting() }}",
-        initialData: {
-            shippingCountries: {{ services.country.getActiveCountriesList() | filterFields(["id", "currLangName", "isoCode2", "states.id", "states.name"]) | json_encode | raw }},
-            shippingCountryId: {{ services.checkout.getShippingCountryId() }}
-        },
-        features: {}
-    };
-</script>
+    <script>
+        App = {
+            config: {
+                {
+                    ceresConfig | json_encode | raw
+                }
+            },
+            urls: {
+                {
+                    urls | json_encode | raw
+                }
+            },
+            activeCurrency: "{{ currencyData[currencyFormat] }}",
+            currencyPattern: {
+                {
+                    services.checkout.getCurrencyPattern() | json_encode | raw
+                }
+            },
+            isCategoryView: {
+                %
+                if services.template.isCategory() == "1" %
+            }
+            true {
+                %
+                else %
+            }
+            false {
+                % endif %
+            },
+            isCheckoutView: {
+                %
+                if services.template.isCheckout() == "1" %
+            }
+            true {
+                %
+                else %
+            }
+            false {
+                % endif %
+            },
+            isSearch: {
+                %
+                if services.template.isSearch() == "1" %
+            }
+            true {
+                %
+                else %
+            }
+            false {
+                % endif %
+            },
+            isItemView: {
+                %
+                if services.template.getCurrentTemplate() == "tpl.item" %
+            }
+            true {
+                %
+                else %
+            }
+            false {
+                % endif %
+            },
+            templateEvent: "{{ templateEvent }}",
+            templateType: "{{ urls.templateType }}",
+            language: "{{ lang }}",
+            defaultLanguage: "{{ defaultLanguage }}",
+            decimalSeparator: "{{ config("
+            IO.format.separator_decimal ") }}",
+            urlTrailingSlash: {
+                {
+                    urls.appendTrailingSlash | json_encode
+                }
+            },
+            propertyFileUrl: "{{ services.propertyFile.getPropertyFileUrl() }}",
+            isShopBuilder: {
+                {
+                    isShopBuilder |
+                        default (false) | json_encode
+                }
+            },
+            bundleSetting: {
+                {
+                    webstoreConfig.dontSplitItemBundle
+                }
+            },
+            initialPleaseSelect: {
+                {
+                    webstoreConfig.attributeSelectDefaultOption
+                }
+            },
+            publicPath: "{{ plugin_path('Ceres') ~ '/js/dist/' }}",
+            isCheapestSorting: "{{ services.template.isCheapestSorting() }}",
+            initialData: {
+                shippingCountries: {
+                    {
+                        services.country.getActiveCountriesList() | filterFields(["id", "currLangName", "isoCode2", "states.id", "states.name"]) | json_encode | raw
+                    }
+                },
+                shippingCountryId: {
+                    {
+                        services.checkout.getShippingCountryId()
+                    }
+                }
+            },
+            features: {}
+        };
+    </script>
 
-{{ Loader.include_components() }}
+    {{ Loader.include_components() }}
 
-{{ LayoutContainer.show("Ceres::Script.Loader") }}
+    {{ LayoutContainer.show("Ceres::Script.Loader") }}
 
-{{ Translations.add( "Ceres", "Template" ) }}
+    {{ Translations.add( "Ceres", "Template" ) }}
 
-{{ get_json_data() }}
+    {{ get_json_data() }}
 
-{% if ceresConfig.log.performanceLevel  == 'development' %}
+    {% if ceresConfig.log.performanceLevel  == 'development' %}
     <script src="{{ plugin_path('Ceres') }}/js/dist/{{ assetName }}.js?v={{ buildHash }}"></script>
-{% else %}
+    {% else %}
     <script src="{{ plugin_path('Ceres') }}/js/dist/{{ assetName }}.min.js?v={{ buildHash }}"></script>
-{% endif %}
+    {% endif %}
 
-{% for scriptTemplate in get_additional_scripts() %}
+    {% for scriptTemplate in get_additional_scripts() %}
     {% include scriptTemplate.path ignore missing with scriptTemplate.params %}
-{% endfor %}
+    {% endfor %}
 
-{% if isShopBuilder %}
+    {% if isShopBuilder %}
     {% include "Ceres::Widgets.ShopBuilderDataStore" %}
-{% endif %}
+    {% endif %}
 
-<!-- START VARIATION SELECT -->
+    <!-- START VARIATION SELECT -->
 
-<script type="x/template" data-component="variation-select">
-       
+    <script type="x/template" data-component="variation-select">
+
         <div v-if="attributes.length || (Object.keys(possibleUnits).length > 1 && isContentVisible)" class="row">
             <div class="col-12 variation-select" v-for="attribute in attributes">
                 <!-- dropdown -->
@@ -275,60 +517,61 @@
             <slot></slot>
         </div>
     
-</script>  
-
-<!-- END VARIATION SELECT -->
-
-{{ LayoutContainer.show("Ceres::Script.AfterScriptsLoaded") }}
-
-{% if assetName == 'ceres-checkout' %}
-    {{ LayoutContainer.show("Ceres::Checkout.AfterScriptsLoaded") }}
-{% endif %}
-{% if services.template.getCurrentTemplate() == "tpl.item" %}
-    {{ LayoutContainer.show("Ceres::SingleItem.AfterScriptsLoaded") }}
-{% endif %}
-
-<script>
-    window.__loadPluginChunk = function(source) {
-        return source += "?v={{ buildHash }}";
-    };
-
-    window.vueEventHub = new Vue();
-
-    if (App.config.log.checkSyntax)
-    {
-        var rootElement = document.getElementById("vue-app");
-
-        rootElement.innerHTML = rootElement.innerHTML.replace(/(?:^|\s)(?::|v-bind:)\S+=(?:""|'')/g, "");
-
-        window.vueApp = new Vue({
-            store: window.ceresStore
-        });
-
-        vueApp.$mount( rootElement.cloneNode(true) );
-
-        if (vueApp.$el.id === "vue-app")
-        {
-            document.body.replaceChild( vueApp.$el, rootElement );
-        }
-    }
-    else
-    {
-        // eslint-disable-next-line no-unused-vars
-        window.vueApp = new Vue({
-            el: "#vue-app",
-            store: window.ceresStore
-        });
-    }
 </script>
 
-{{ get_filtered_tags() }}
+    <!-- END VARIATION SELECT -->
 
-{{ get_shop_builder_scripts( "latest", ceresConfig.log.performanceLevel == 'live') }}
+    {{ LayoutContainer.show("Ceres::Script.AfterScriptsLoaded") }}
 
-{% if not services.template.shouldBeCached() %}
+    {% if assetName == 'ceres-checkout' %}
+    {{ LayoutContainer.show("Ceres::Checkout.AfterScriptsLoaded") }}
+    {% endif %}
+    {% if services.template.getCurrentTemplate() == "tpl.item" %}
+    {{ LayoutContainer.show("Ceres::SingleItem.AfterScriptsLoaded") }}
+    {% endif %}
+
+    <script>
+        window.__loadPluginChunk = function(source) {
+            return source += "?v={{ buildHash }}";
+        };
+
+        window.vueEventHub = new Vue();
+
+        if (App.config.log.checkSyntax) {
+            var rootElement = document.getElementById("vue-app");
+
+            rootElement.innerHTML = rootElement.innerHTML.replace(/(?:^|\s)(?::|v-bind:)\S+=(?:""|'')/g, "");
+
+            window.vueApp = new Vue({
+                store: window.ceresStore
+            });
+
+            vueApp.$mount(rootElement.cloneNode(true));
+
+            if (vueApp.$el.id === "vue-app") {
+                document.body.replaceChild(vueApp.$el, rootElement);
+            }
+        } else {
+            // eslint-disable-next-line no-unused-vars
+            window.vueApp = new Vue({
+                el: "#vue-app",
+                store: window.ceresStore
+            });
+        }
+    </script>
+
+    {{ get_filtered_tags() }}
+
+    {{ get_shop_builder_scripts( "latest", ceresConfig.log.performanceLevel == 'live') }}
+
+    {% if not services.template.shouldBeCached() %}
     <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
-{% endif %}
-
+    {% endif %}
+    
+    <!-- Script WerkzeugModal -->
+    {% set isMyCategory = false %} {% for category in item.documents[0].data.defaultCategories if category.id == 924 %} {% set isMyCategory = true %} {% endfor %} {% if isMyCategory %}
+<script>$('#myModal').modal('toggle')</script> {% endif %}
+    <!-- End WerkzeugModal -->
 </body>
+
 </html>
