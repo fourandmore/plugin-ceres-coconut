@@ -6,7 +6,7 @@ use IO\Extensions\Functions\Partial;
 use Plenty\Plugin\Events\Dispatcher;
 use Plenty\Plugin\ServiceProvider;
 use Plenty\Plugin\Templates\Twig;
-use Plenty\Modules\Webshop\Template\Providers\TemplateServiceProvider
+use Plenty\Modules\Webshop\Template\Providers\TemplateServiceProvider;
 
 class CeresCoconutServiceProvider extends ServiceProvider
 {
