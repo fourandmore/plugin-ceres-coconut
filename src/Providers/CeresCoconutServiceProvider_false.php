@@ -358,13 +358,12 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
-    }
-}
-
-
-class CeresCoconutServiceProvider extends ServiceProvider
+	}
+	}
+	class CeresCoconutServiceProvider extends ServiceProvider
 {public function boot()
 	{
 		$this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree");
 }
 	}
+	
