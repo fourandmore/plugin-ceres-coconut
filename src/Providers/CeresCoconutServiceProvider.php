@@ -29,9 +29,6 @@ class CeresCoconutServiceProvider extends ServiceProvider
 
         $enabledOverrides = explode(", ", $config->get("CeresCoconut.templates.override"));
 
-        
-       
-        $this->overrideTemplate("Ceres::Category.Macros.CategroyTree", " CeresCoconut::Category.Macros.CategroyTree");
         // Override partials
         $dispatcher->listen('IO.init.templates', function (Partial $partial) use ($enabledOverrides)
         {
@@ -362,5 +359,9 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
+
     }
 }
+boot(
+    $this->overrideTemplate("Ceres::Category.Macros.CategroyTree", " CeresCoconut::Category.Macros.CategroyTree");
+)
