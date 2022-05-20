@@ -20,7 +20,8 @@
 <head>
     {{ get_consent_scripts(ceresConfig.global.blockCookies) }}
 
-    {% include getPartial('head') %}
+    <!-- {% include getPartial('head') %} -->
+    {% include "CeresCoconut::PageDesign.Partials.Header.Navigation" %}
 
     {% block PartialHead %}
         {% embed getPartial('page-metadata') %}{% endembed %}
