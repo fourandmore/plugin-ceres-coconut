@@ -20,8 +20,7 @@
 <head>
     {{ get_consent_scripts(ceresConfig.global.blockCookies) }}
 
-    <!-- {% include getPartial('head') %} -->
-    {% include "CeresCoconut::PageDesign.Partials.Header.Navigation" %}
+    {% include getPartial('head') %}
 
     {% block PartialHead %}
         {% embed getPartial('page-metadata') %}{% endembed %}
@@ -50,7 +49,8 @@
         <notifications template="#vue-notifications" :initial-notifications="{{ notifications | json_encode() }}"></notifications>
     </lazy-hydrate>
 
-    {% include getPartial('header') %}
+    <!-- {% include getPartial('header') %} -->
+    {% include "CeresCoconut::PageDesign.Partials.Header" %}
 
     <div id="page-body" class="main">
         {% block PageBody %}{% endblock %}
