@@ -29,4 +29,5 @@ $this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Ca
 
 
     }
+
 }
