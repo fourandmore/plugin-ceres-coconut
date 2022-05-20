@@ -6,10 +6,10 @@ use IO\Extensions\Functions\Partial;
 use Plenty\Plugin\Events\Dispatcher;
 use Plenty\Plugin\ServiceProvider;
 use Plenty\Plugin\Templates\Twig;
-use Plenty\Modules\Webshop\CeresCoconut\Providers\CeresCoconutServiceProvider;
 
 class CeresCoconutServiceProvider extends ServiceProvider
 {
+    const PRIORITY = 0;
 
     /**
      * Register the service provider.
