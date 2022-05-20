@@ -32,9 +32,10 @@ class CeresCoconutServiceProvider extends ServiceProvider
         $dispatcher->listen('IO.init.templates', function (Partial $partial) use ($enabledOverrides)
         {
             $partial->set('head', 'Ceres::PageDesign.Partials.Head');
-            $partial->set('header', 'Ceres::PageDesign.Partials.Header.Header');
+            /* $partial->set('header', 'Ceres::PageDesign.Partials.Header'); */
             $partial->set('page-design', 'Ceres::PageDesign.PageDesign');
             $partial->set('footer', 'Ceres::PageDesign.Partials.Footer');
+            $partial->set('header', 'CeresCoconut::PageDesign.Partials.Header');
 
             if (in_array("head", $enabledOverrides) || in_array("all", $enabledOverrides))
             {
