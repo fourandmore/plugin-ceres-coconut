@@ -26,7 +26,8 @@ class CeresCoconutServiceProvider extends ServiceProvider
 
     public function boot(Twig $twig, Dispatcher $dispatcher, ConfigRepository $config)
     {        
-        $enabledOverrides = explode(", ", $config->get("CeresCoconut.templates.override"));
+        $this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree");
+		$enabledOverrides = explode(", ", $config->get("CeresCoconut.templates.override"));
         
     
         // Override partials
@@ -360,8 +361,4 @@ class CeresCoconutServiceProvider extends ServiceProvider
             }, self::PRIORITY);
         }
     }
-	public function boot(Twig $twig, Dispatcher $dispatcher, ConfigRepository $config)
-    {   
-        $this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree")
-	}
 }
