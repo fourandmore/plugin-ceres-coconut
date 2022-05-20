@@ -26,7 +26,7 @@ class CeresCoconutServiceProvider extends ServiceProvider
     {
                 $enabledOverrides = explode(", ", $config->get("CeresCoconut.templates.override"));
 
-$this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader");
+$this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader.twig", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader.twig");
 
 
     }
