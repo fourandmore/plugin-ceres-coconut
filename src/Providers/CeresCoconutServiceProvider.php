@@ -26,7 +26,7 @@ class CeresCoconutServiceProvider extends ServiceProvider
     {
         
 
-$this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree");
+$this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader");
 
 
     }
