@@ -36,6 +36,7 @@ class CeresCoconutServiceProvider extends ServiceProvider
             $partial->set('header', 'Ceres::PageDesign.Partials.Header');
             $partial->set('page-design', 'Ceres::PageDesign.PageDesign');
             $partial->set('footer', 'Ceres::PageDesign.Partials.Footer');
+			$partial->set('header', 'CeresCoconut::PageDesign.Partials.Header.Header');
 
             if (in_array("head", $enabledOverrides) || in_array("all", $enabledOverrides))
             {
@@ -359,14 +360,5 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
-    }
-        public function boot(Twig $twig, Dispatcher $eventDispatcher)
-    {
-        $eventDispatcher->listen('IO.init.templates', function(Partial $partial)
-        {
-                   // Override Header
-        $partial->set('header', 'CeresCoconut::PageDesign.Partials.Header');
-        }, 0);
-        return false;
     }
 }
