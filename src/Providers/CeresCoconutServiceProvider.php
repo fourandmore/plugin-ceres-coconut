@@ -358,9 +358,9 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
-    }
-	public function boot(Twig $twig, Dispatcher $dispatcher, ConfigRepository $config)
-    {   
-        $this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree");
-}
+	}
+	function boot()
+	{
+		            $this->overrideTemplate("Ceres::Category.Macros.CategoryTree", "CeresCoconut::Category.Macros.CategoryTree");
+	}
 }
