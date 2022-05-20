@@ -28,10 +28,10 @@ class CeresCoconutServiceProvider extends ServiceProvider
     {   
 
         $enabledOverrides = explode(", ", $config->get("CeresCoconut.templates.override"));
+
         
        
-        $this->overrideTemplate(" Ceres::Category.Macros.CategroyTree.twig", " CeresCoconut::Category.Macros.CategroyTree.twig");
-
+        $this->overrideTemplate("Ceres::Category.Macros.CategroyTree.twig", " CeresCoconut::Category.Macros.CategroyTree.twig");
         // Override partials
         $dispatcher->listen('IO.init.templates', function (Partial $partial) use ($enabledOverrides)
         {
