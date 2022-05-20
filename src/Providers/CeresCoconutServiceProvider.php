@@ -358,6 +358,6 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
-    $this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader.twig", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader.twig");
+   /* $this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader.twig", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader.twig"); */
 	}
 }
