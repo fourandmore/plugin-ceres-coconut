@@ -9,7 +9,7 @@ use IO\Helper\TemplateContainer;
 use IO\Extensions\Functions\Partial;
 use IO\Services\ItemSearch\Helper\ResultFieldTemplate;
 use Plenty\Plugin\ConfigRepository;
-use Plenty\Modules\Webshop\CeresCoconut\Providers\CeresCoconutServiceProvider
+use Plenty\Modules\Webshop\CeresCoconut\Providers\CeresCoconutServiceProvider;
 
 
 /**
@@ -359,6 +359,6 @@ class CeresCoconutServiceProvider extends ServiceProvider
                 $templateContainer->setTemplates($templatesToOverride);
             }, self::PRIORITY);
         }
-   $this->overrideTemplate("Ceres::PageDesign.Partials.Header.DefaultHeader.twig", "CeresCoconut::PageDesign.Partials.Header.DefaultHeader.twig");
-	}
+   $this->overrideTemplate("Ceres::Category.Macros.CategoryTree.twig", "CeresCoconut::Category.Macros.CategoryTree.twig");
+	
 }
