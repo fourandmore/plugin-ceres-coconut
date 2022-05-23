@@ -362,3 +362,4 @@ class CeresCoconutServiceProvider extends ServiceProvider
    $this->overrideTemplate("Ceres::Category.Macros.CategoryTree.twig", "CeresCoconut::Category.Macros.CategoryTree.twig");
 	
 }
+}
